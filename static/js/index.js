@@ -1,7 +1,7 @@
 $(function() {
     $('#close_id_card').hide();
     $('#far_id_card').hide();
-    $('button').click(function() {
+    $('form').on("submit", function(e) {
         const ID = $('#inputID').val();
 
         if (ID) {
@@ -49,5 +49,7 @@ $(function() {
         } else {
             alert("ID is required!")
         }
+
+        e.preventDefault();
     })
 })
