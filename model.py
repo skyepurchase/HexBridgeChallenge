@@ -8,9 +8,12 @@ from sklearn.cluster import KMeans
 # Import Astra API
 from astra import save_user, load_all_users
 
+# Import vocabulary
+from vocabulary import vocabulary
+
 # Constants
 NUM_CLUSTERS = 4
-from vocabulary import vocabulary
+
 
 class Model:
 
@@ -35,8 +38,6 @@ class Model:
         self.kmeans = KMeans(n_clusters=min(NUM_CLUSTERS, self.X.shape[0]))
         self.kmeans.fit(self.X)
 
-        print(self.kmeans.cluster_centers_)
-
 
     def process_user(self, user_id, weighted_texts, add_to_model=True):
         '''
@@ -50,8 +51,6 @@ class Model:
             returns: ([user_ids of similar people], [user_ids of very different people])
         '''
 
-        assert add_to_model # Implemented later
-
         # Vectorize the text
         counts = scipy.sparse.csr.csr_matrix((1, len(vocabulary)))
         vectorizer = CountVectorizer(vocabulary=vocabulary)
@@ -63,18 +62,26 @@ class Model:
         normalizer = Normalizer(copy=False)
         counts = normalizer.transform(counts)
 
-        # Push to existing data
-        self.uids.append(user_id)
-        self.X = scipy.sparse.vstack([self.X, counts])
+        if add_to_model:
 
-        # Do more iterations of the clustering
-        # Might want to set a smaller max_iter here
-        self.kmeans = KMeans(n_clusters=min(NUM_CLUSTERS, self.kmeans.n_clusters),
-                             init=self.kmeans.cluster_centers_)
-        self.kmeans.fit(self.X)
+            # Persist user
+            save_user(user_id, counts)
 
-        # Look up the cluster of the new user
-        user_cluster = self.kmeans.labels_[-1]
+            # Push to existing data
+            self.uids.append(user_id)
+            self.X = scipy.sparse.vstack([self.X, counts])
+
+            # Do more iterations of the clustering
+            # Might want to set a smaller max_iter here
+            self.kmeans = KMeans(n_clusters=min(NUM_CLUSTERS, self.kmeans.n_clusters),
+                                 init=self.kmeans.cluster_centers_)
+            self.kmeans.fit(self.X)
+
+            # Look up the cluster of the new user
+            user_cluster = self.kmeans.labels_[-1]
+
+        else:
+            user_cluster = self.kmeans.predict(counts)
 
         # Find users in the same cluster
         same_cluster_users = [self.uids[i] for i in range(len(self.uids)) if self.kmeans.labels_[i] == user_cluster]
@@ -96,6 +103,6 @@ class Model:
 
 
 if __name__ == "__main__":
-    print(Model().process_user({'twitter': "asd", 'reddit': "ajsdk"}, [(1, "He just visited Trump but didn't like right wing stuff")]))
+    print(Model().process_user({'twitter': "asd", 'reddit': "ajsdk"}, [(1, "He just visited Trump but didn't like right wing stuff")], add_to_model=True))
 
 
