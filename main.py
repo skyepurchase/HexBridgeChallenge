@@ -1,6 +1,7 @@
 from flask import Flask, request
 import json
-from model.py import process_user
+from model import Model
+from scraper import Social, Scraper
 
 app = Flask(__name__)
 
@@ -11,8 +12,10 @@ def process():
     add_to_model=request.form['add_to_model']
     posts=[]
     for social, id in IDs.items():
-        curr_weight,curr_text=get_user_text(social,id)
+        scraper = Scraper()
+        curr_weight,curr_text=scraper.get_user_text(Social.REDDIT,id) if (social=="reddit") else scraper.get_user_text(Social.TWITTER,id)
         posts.append((curr_weight,curr_text))
-    close_ids,far_ids=process_user(IDs,posts,add_to_model)
+    model=Model()
+    close_ids,far_ids=model.process_user(IDs,posts,add_to_model)
     res={"close_ids":close_ids,"far_ids":far_ids}
     return json.dumps(res)
