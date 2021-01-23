@@ -21,21 +21,26 @@
     <div class="container">
         <form class="form-twitter-id" role="form">
             <h2 class="form-twitter-id-heading">Please Enter Twitter Handle</h2>
-            <input type="text" id="inputTwitterID" name="twitterID" class="form-control" placeholder="@Your-Handle" required autofocus>
-            <input type="radio" id="databaseConsent" name="consent" required>
-            <button class="btn btn-lg btn-primary btn-block" type="button">Generate</button>
+            <div class="row">
+                <select class="col" id="social" name="dropdown">
+                    <option value="twitter" selected>Twitter Account</option>
+                    <option value="reddit" selected>Reddit Account</option>
+                </select>
+                <input class="col" type="text" id="inputTwitterID" name="twitterID" class="form-control" placeholder="@Your-Handle" required autofocus>
+            </div>
+            <button class="row btn btn-lg btn-primary btn-block" type="button">Generate</button>
         </form>
 
-        <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+        <div class="card text-white bg-success mb-3" id="close_ids" style="max-width: 18rem;">
             <div class="card-header">Close IDs</div>
             <div class="card-body">
-                <h5 class="card-title" id="close_ids"></h5>
+                <h5 class="card-title" id="close_id"></h5>
             </div>
         </div>
-        <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-            <div class="card-header">Close IDs</div>
+        <div class="card text-white bg-danger mb-3" id="far_ids" style="max-width: 18rem;">
+            <div class="card-header">Far IDs</div>
             <div class="card-body">
-                <h5 class="card-title" id="far_ids"></h5>
+                <h5 class="card-title" id="far_id"></h5>
             </div>
         </div>
     </div>
