@@ -26,26 +26,21 @@
                     <option value="twitter" selected>Twitter Account</option>
                     <option value="reddit" selected>Reddit Account</option>
                 </select>
-                <input class="col" type="text" id="inputTwitterID" name="twitterID" class="form-control" placeholder="@Your-Handle" required>
+                <input class="col" type="text" id="inputTwitterID" name="twitterID" class="form-control" placeholder="@Your-Handle" required/>
             </div>
             <label for="consentYes" class="col">Do you wish to be added to the Database?</label>
-            <div class="row">
-                <input class="col" type="radio" id="consentYes" name="consent" value="yes" checked> Yes<br><br>
-                <input class="col" type="radio" id="consentNo" name="consent" value="no"> No<br><br>
-            </div>
-            <button class="col btn btn-lg btn-primary btn-block" type="button">Generate</button>
+            <input class="col" type="radio" id="consentYes" name="consent" value="yes" required/> Yes<br><br>
+            <button class="col btn btn-lg btn-primary btn-block" type="submit">Generate</button>
         </form>
 
-        <div class="card text-white bg-success mb-3" id="close_ids" style="max-width: 18rem;">
+        <div class="card text-white bg-success mb-3" id="close_id_card" style="max-width: 18rem;">
             <div class="card-header">Close IDs</div>
-            <div class="card-body">
-                <h5 class="card-title" id="close_id"></h5>
+            <div class="card-body" id="close_ids">
             </div>
         </div>
-        <div class="card text-white bg-danger mb-5" id="far_ids" style="max-width: 18rem;">
+        <div class="card text-white bg-danger mb-5" id="far_id_card" style="max-width: 18rem;">
             <div class="card-header">Far IDs</div>
-            <div class="card-body">
-                <h5 class="card-title" id="far_id"></h5>
+            <div class="card-body" id="far_ids">
             </div>
         </div>
     </div>
