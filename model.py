@@ -32,7 +32,7 @@ class Model:
             self.X = scipy.sparse.vstack([self.X, fvector])
 
         # Do initial clustering
-        self.kmeans = KMeans(n_clusters=NUM_CLUSTERS)
+        self.kmeans = KMeans(n_clusters=min(NUM_CLUSTERS, self.X.shape[0]))
         self.kmeans.fit(self.X)
 
         print(self.kmeans.cluster_centers_)
@@ -69,33 +69,33 @@ class Model:
 
         # Do more iterations of the clustering
         # Might want to set a smaller max_iter here
-        self.kmeans = KMeans(n_clusters=NUM_CLUSTERS, init=self.kmeans.cluster_centers_)
+        self.kmeans = KMeans(n_clusters=min(NUM_CLUSTERS, self.kmeans.n_clusters),
+                             init=self.kmeans.cluster_centers_)
         self.kmeans.fit(self.X)
 
-        # Look up the cluster of the new user                                                                                                                                                                                                                                                 
+        # Look up the cluster of the new user
         user_cluster = self.kmeans.labels_[-1]
-        print(np.where(self.kmeans.labels_ == user_cluster))                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                              
-        # Find users in the same cluster                                                                                                                                                                                                                                                      
-        same_cluster_users = [self.uids[i] for i in range(len(uids)) if self.kmeans.labels_[i] == user_cluster]                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                                              
-        # Find furthest cluster                                                                                                                                                                                                                                                               
-        maxdist = 0                                                                                                                                                                                                                                                                           
-        furthest_cluster = -1                                                                                                                                                                                                                                                                 
-        for label, centre in enumerate(self.kmeans.cluster_centers_):                                                                                                                                                                                                                         
-            diffvec = centre - counts                                                                                                                                                                                                                                                         
-            dist = np.inner(diffvec, diffvec)                                                                                                                                                                                                                                                 
-            if dist > maxdist:                                                                                                                                                                                                                                                                
-                maxdist = dist                                                                                                                                                                                                                                                                
-                furthest_cluster = label                                                                                                                                                                                                                                                      
+
+        # Find users in the same cluster
+        same_cluster_users = [self.uids[i] for i in range(len(self.uids)) if self.kmeans.labels_[i] == user_cluster]
+
+        # Find furthest cluster
+        maxdist = 0
+        furthest_cluster = -1
+        for label, centre in enumerate(self.kmeans.cluster_centers_):
+            diffvec = centre - counts
+            dist = np.inner(diffvec, diffvec)
+            if dist > maxdist:
+                maxdist = dist
+                furthest_cluster = label
 
         # Find users in the cluster furthest away
-        furthest_cluster_users = [self.uids[i] for i in range(len(uids)) if self.kmeans.labels_[i] == furthest_cluster]
+        furthest_cluster_users = [self.uids[i] for i in range(len(self.uids)) if self.kmeans.labels_[i] == furthest_cluster]
 
         return [same_cluster_users], [furthest_cluster_users]
 
 
 if __name__ == "__main__":
-    Model().process_user((3, "fsd"), [(1, "He just visited Trump but didn't like right wing stuff")])
+    print(Model().process_user({'twitter': "asd", 'reddit': "ajsdk"}, [(1, "He just visited Trump but didn't like right wing stuff")]))
 
 
