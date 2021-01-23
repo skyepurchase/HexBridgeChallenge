@@ -3,7 +3,7 @@ $(function() {
         var ID = $('#inputTwitterID').val();
         $.ajax({
             url: '/process',
-            data: {IDs: [ID]},
+            data: {'twitter': ID},
             type: 'POST'
         }).done(function(data) {
             $('#close_ids').text(data.close_ids).show();
