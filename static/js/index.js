@@ -9,5 +9,5 @@ $(function() {
             $('#close_ids').text(data.close_ids).show();
             $('#far_ids').text(data.far_ids).show();
         });
-    })
+    });
 })

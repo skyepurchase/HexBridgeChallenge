@@ -10,7 +10,7 @@
 
     <title>Opinion Diversifier</title>
 
-    <link href="../static/css/bootstrap-grid.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="../static/js/index.js"></script>
@@ -21,9 +21,11 @@
     <div class="container">
         <form class="form-twitter-id" role="form">
             <h2 class="form-twitter-id-heading">Please Enter Twitter Handle</h2>
-            <input type="submit" id="inputTwitterID" name="twitterID" class="form-control" placeholder="@Your-Handle" required autofocus>
+            <input type="text" id="inputTwitterID" name="twitterID" class="form-control" placeholder="@Your-Handle" required autofocus>
+            <input type="radio" id="databaseConsent" name="consent" required>
             <button class="btn btn-lg btn-primary btn-block" type="button">Generate</button>
         </form>
+
         <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
             <div class="card-header">Close IDs</div>
             <div class="card-body">
