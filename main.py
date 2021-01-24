@@ -28,11 +28,11 @@ def process():
         close_ids,far_ids=model.process_user(IDs,posts,consent)
         res={"close_ids":close_ids,"far_ids":far_ids}
         print("Returning: " + str(res))
-        return json.dumps(res)
+        return res
     except Exception as e:
         traceback.print_tb(e.__traceback__)
         print(e)
-        return json.dumps({"close_ids":[],"far_ids":[]})
+        return {"close_ids":[],"far_ids":[]}
 
 """
 @app.route("/get_network",methods=["POST"])
