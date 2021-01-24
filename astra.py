@@ -8,7 +8,8 @@ from cassandra.auth import PlainTextAuthProvider
 def run_command(cmd):
     try:
         cloud_config = {
-                'secure_connect_bundle': './secure-connect-hexbridgechallenge.zip'
+                'secure_connect_bundle': './secure-connect-hexbridgechallenge.zip',
+                'use_default_tempdir': True
         }
         auth_provider = PlainTextAuthProvider('hexbridge', 'password1')
         cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
