@@ -4,6 +4,8 @@ import prawcore
 from prawcore.exceptions import PrawcoreException
 import tweepy
 import configparser
+import pprint
+import random
 
 from tweepy.error import TweepError
 
@@ -30,30 +32,36 @@ class Scraper:
 
     def get_user_text(self, social_source: Social, name: str, item_count=10):
         if(social_source == Social.TWITTER):
-            comm = self.get_user_comments(
+            comm = self.get_user_comment_texts(
                 social_source, name)
             friends = self.get_twitter_friends(name)
             texts = []
             for f in friends:
                 try:
-                    texts.append(self.get_user_comments(
+                    texts.append(self.get_user_comment_texts(
                         social_source, f, item_count=3))
                 except Exception:
                     continue
             return [(5, comm), (1, " ".join(texts))]
         elif(social_source == Social.REDDIT):
-            return [(1, self.get_user_comments(social_source, name, item_count))]
+            return [(1, self.get_user_comment_texts(social_source, name, item_count))]
         else:
             raise Exception(
                 f"Incorrect social_source. It needs to be one of Social.{', Social.'.join(Social._member_names_)}.")
+
+    def get_user_comment_texts(self, social_source: Social, name: str, item_count=10):
+        return " ".join([t[0] for t in self.get_user_comments(social_source, name, item_count)])
+
+    def get_user_comment_urls(self, social_source: Social, name: str, item_count=10):
+        return [t[1] for t in self.get_user_comments(social_source, name, item_count)]
 
     def get_user_comments(self, social_source: Social, name: str, item_count=10):
         if(social_source == Social.TWITTER):
             try:
                 timeline = self.twitter.user_timeline
-                comments = [t.text for t in tweepy.Cursor(timeline,
-                                                          screen_name=name, count=item_count).items(item_count)]
-                return " ".join(comments)
+                comments = [(t.text, f"https://twitter.com/twitter/statuses/{str(t.id)}") for t in tweepy.Cursor(timeline,
+                                                                                                                 screen_name=name, count=item_count).items(item_count)]
+                return comments
             except TweepError as e:
                 code = e.response.status_code
                 if(code == 404):
@@ -69,9 +77,9 @@ class Scraper:
         elif(social_source == Social.REDDIT):
             try:
                 redditor = self.reddit.redditor(name=name)
-                comments = [t.body for t in redditor.comments.top(
+                comments = [(t.body, f"https://www.reddit.com{t.permalink}") for t in redditor.comments.top(
                     "all", limit=item_count)]
-                return " ".join(comments)
+                return comments
             except PrawcoreException as e:
                 code = e.response.status_code
                 if(code == 404):
@@ -100,32 +108,13 @@ class Scraper:
             id).screen_name for id in followers]
         return followers_names
 
-    def sample_names(self, social_source: Social, limit=10):
+    def sample_names(self, social_source: Social, limit=10, topic="news"):
         if(social_source == Social.TWITTER):
-            names = self.get_twitter_followers("elonmusk")
+            search = self.twitter.search
+            comments = [t.author.screen_name for t in tweepy.Cursor(search,
+                                                                    q=topic, lang="en", tweet_mode="extended", count=limit).items(limit)]
+            return comments
         elif(social_source == Social.REDDIT):
             names = [post.author.name for post in self.reddit.subreddit(
-                "news").comments(limit=limit)]
+                topic).comments(limit=limit)]
         return names
-
-
-scraper = Scraper()
-# try:
-#     try:
-#         print(scraper.get_user_text(Social.TWITTER, "nikgeo25"))
-#     except PrawcoreException as e:
-#         print(vars(e.response))
-#         code = e.response.status_code
-#         if(code == 404):
-#             raise Exception("No such user.")
-#         elif(code == 401):
-#             raise Exception(
-#                 "Your account might be private. We cannot access your timeline.")
-#         elif(code == 429):
-#             raise Exception(
-#                 "Too many users! Wait 15 minutes before retrying as Twitter needs to reset our quota.")
-#         else:
-#             raise e
-# except Exception as e:
-#     print(e)
-print(scraper.get_user_text("N", "olololoajd"))
