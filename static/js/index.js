@@ -57,8 +57,8 @@ $(function() {
                 $('#far_ids').empty();
 
                 data.close_ids.forEach(ID => {
-                    let p = document.createElement("script");
-                    p.textContent = JSON.stringify(ID);
+                    let p = document.createElement("p");
+                    p.textContent = ID;
                     $('#close_ids').append(p);
                 })
 

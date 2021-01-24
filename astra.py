@@ -1,19 +1,8 @@
 import pickle
 import base64
 
-from scipy.sparse.csr import csr_matrix
-
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
-
-from vocabulary import vocabulary
-exv1 = csr_matrix((1, len(vocabulary)))
-exv1[(0, 0)] = 1
-exv2 = csr_matrix((1, len(vocabulary)))
-exv2[(0, 1)] = 1
-
-storage = [({}, exv1), ({}, exv2)]
-
 
 
 def run_command(cmd):
@@ -28,7 +17,7 @@ def run_command(cmd):
         rows = session.execute(cmd).all()
         return rows
     except:
-        print("An error has occurred")
+        print(f"An error has occurred for '{cmd}'")
         return None
 
 
@@ -38,24 +27,22 @@ def test_connection():
         print("Connection ok.")
 
 
-def save_user(twitter_id, data):
-    #data_string = base64.b64encode(pickle.dumps(data)).decode("ascii")
-    #run_command(f"INSERT INTO \"HexBridge\".wordcounts (id, pickle) VALUES('{twitter_id}', textAsBlob('{data_string}'))")
-    storage.append((twitter_id, data))
+def save_user(id, data):
+    data_string = base64.b64encode(pickle.dumps(data)).decode("ascii")
+    if 'reddit' in id:
+        run_command(f"INSERT INTO \"HexBridge\".wordcount (social, username, pickle) VALUES(0, '{id['reddit']}', textAsBlob('{data_string}'))")
+    if 'twitter' in id:
+        run_command(f"INSERT INTO \"HexBridge\".wordcount (social, username, pickle) VALUES(1, '{id['twitter']}', textAsBlob('{data_string}'))")
 
-
-def load_user(twitter_id):
-    #row = run_command(f"select pickle from \"HexBridge\".wordcounts where id = '{twitter_id}';")
-    #data = pickle.loads(base64.b64decode(row[0]))
-    #print(data)
-    #return data
-    pass
 
 def load_all_users():
-    return storage
+    rows = run_command("select * from \"HexBridge\".wordcount;")
+    return [(row[0], row[1], pickle.loads(base64.b64decode(row[2]))) for row in rows]
 
 
 if __name__ == "__main__":
     test_connection()
-    print(load_user('test'))
+    # save_user({'twitter': 'test', 'reddit': 'test1'}, [9, 8, 7, 6])
+    # save_user({'twitter': 'test'}, [1, 2, 3, 4])
+    # save_user({'reddit': 'test'}, [2, 0, 2, 1])
     print(load_all_users())
