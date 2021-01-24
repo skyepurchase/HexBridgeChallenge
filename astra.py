@@ -52,10 +52,6 @@ def load_user(twitter_id):
 def load_all_users():
     return storage
 
-def load_all_users():
-    rows = run_command("select * from \"HexBridge\".wordcounts;")
-    return {row[0]: pickle.loads(base64.b64decode(row[1])) for row in rows}
-
 
 if __name__ == "__main__":
     test_connection()
