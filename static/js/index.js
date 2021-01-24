@@ -65,6 +65,8 @@ $(function() {
                     p.textContent = ID;
                     $('#far_ids').append(p);
                 })
+            }).fail(function (err) {
+                alert(err);
             })
         }
         e.preventDefault();
