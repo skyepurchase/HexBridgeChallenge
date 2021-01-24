@@ -27,6 +27,7 @@ def process():
         IDs[social]=id
         close_ids,far_ids=model.process_user(IDs,posts,consent)
         res={"close_ids":close_ids,"far_ids":far_ids}
+        print("Returning: " + str(res))
         return json.dumps(res)
     except Exception as e:
         traceback.print_tb(e.__traceback__)
