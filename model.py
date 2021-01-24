@@ -62,7 +62,7 @@ class Model:
         normalizer = Normalizer(copy=False)
         counts = normalizer.transform(counts)
 
-        if add_to_model:
+        if add_to_model == True:
 
             # Persist user
             save_user(user_id, counts)
