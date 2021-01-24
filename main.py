@@ -15,7 +15,6 @@ def root():
 
 @app.route("/process",methods=["POST"])
 def process():
-    print(request.form)
     social=request.form['social']
     consent=request.form['consent']
     id=request.form['ID']
