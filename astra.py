@@ -6,11 +6,13 @@ from scipy.sparse.csr import csr_matrix
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
+from vocabulary import vocabulary
+exv1 = csr_matrix((1, len(vocabulary)))
+exv1[(0, 0)] = 1
+exv2 = csr_matrix((1, len(vocabulary)))
+exv2[(0, 1)] = 1
 
-storage = [
-        ({}, csr_matrix([1, 0, 0, 0, 0, 0, 0, 0])),
-        ({}, csr_matrix([0, 0, 1, 0, 0, 0, 0, 0]))
-]
+storage = [({}, exv1), ({}, exv2)]
 
 
 
