@@ -65,6 +65,8 @@ $(function() {
                     p.textContent = JSON.stringify(ID);
                     $('#far_ids').append(p);
                 })
+            }).fail(function (err) {
+                alert(err);
             })
         }
         e.preventDefault();
