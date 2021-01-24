@@ -66,7 +66,7 @@ $(function() {
                     let cl2 = document.createAttribute("class");
                     cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
-                    header.textContent = post.ID;
+                    header.textContent = post.ID + post.link;
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
@@ -100,7 +100,7 @@ $(function() {
                     let cl2 = document.createAttribute("class");
                     cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
-                    header.textContent = post.ID;
+                    header.textContent = post.ID + post.link;
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
@@ -124,8 +124,9 @@ $(function() {
                     $('#far_ids').append(card);
                 })
 
-            }).fail(function (err) {
-                alert("An error occurred checked console log!");
+            }).fail(function (data, textStatus, xhr) {
+                alert("ERROR: " + data.status);
+                alert("STATUS: "+xhr);
             })
         }
     })
