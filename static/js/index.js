@@ -66,7 +66,7 @@ $(function() {
                     $('#far_ids').append(p);
                 })
             }).fail(function (err) {
-                alert(err);
+                alert(err.message);
             })
         }
         e.preventDefault();

@@ -19,36 +19,41 @@
 
 <body>
     <div class="container">
-        <form class="form-twitter-id" role="form">
-            <h2 class="form-twitter-id-heading">Please Enter Twitter Handle</h2>
-            <div class="row">
-                <div class="mb-3">
-                    <label for="social" class="form-label">Select Account Type</label>
-                    <select class="col form-control" id="social" name="dropdown">
-                        <option value="twitter" selected>Twitter Account</option>
-                        <option value="reddit" selected>Reddit Account</option>
-                    </select>
+        <div class="bg-primary w-100">
+            <form class="form-twitter-id" role="form">
+                <h2 class="text-center text-white">Opinion Diversifier</h2>
+                <div class="row w-auto p-3">
+                    <div class="mb-3">
+                        <label for="social" class="form-label text-white">Select Account Type</label>
+                        <select class="col form-control" id="social" name="dropdown">
+                            <option value="twitter" selected>Twitter Account</option>
+                            <option value="reddit" selected>Reddit Account</option>
+                        </select>
+                    </div>
+                    <div class="col mb-3" id="idForm">
+                        <label for="inputID" class="form-label text-white">Enter Your ID</label>
+                        <input type="text" id="inputID" name="ID" class="form-control" required/>
+                    </div>
                 </div>
-                <div class="col mb-3" id="idForm">
-                    <label for="inputID" class="form-label">Enter Your ID</label>
-                    <input type="text" id="inputID" name="ID" class="form-control" required/>
+                <div class="row">
+                    <label class="col text-white" for="consent">Do you wish to be added to the Database?</label>
+                    <p class="text-white">Yes</p>
+                    <input class="col text-while" type="checkbox" id="consent" name="consent" value="yes"/>
                 </div>
-            </div>
-            <div class="row">
-                <label class="col" for="consent">Do you wish to be added to the Database?</label> Yes<br><br>
-                <input class="col" type="checkbox" id="consent" name="consent" value="yes"/>
-            </div>
-            <button class="col btn btn-lg btn-primary btn-block" type="submit">Generate</button>
-        </form>
-
-        <div class="card text-white bg-success mb-3" id="close_id_card" style="max-width: 18rem;">
-            <div class="card-header">Close IDs</div>
-            <div class="card-body" id="close_ids">
-            </div>
+                <button class="col btn btn-lg btn-primary btn-block" type="submit">Generate</button>
+            </form>
         </div>
-        <div class="card text-white bg-danger mb-3" id="far_id_card" style="max-width: 18rem;">
-            <div class="card-header">Far IDs</div>
-            <div class="card-body" id="far_ids">
+
+        <div class="row align-content-center">
+            <div class="card text-white bg-success mb-3" id="close_id_card" style="max-width: 18rem;">
+                <div class="card-header">Close IDs</div>
+                <div class="card-body" id="close_ids">
+                </div>
+            </div>
+            <div class="card text-white bg-danger mb-3" id="far_id_card" style="max-width: 18rem;">
+                <div class="card-header">Far IDs</div>
+                <div class="card-body" id="far_ids">
+                </div>
             </div>
         </div>
     </div>
