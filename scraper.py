@@ -3,6 +3,8 @@ import praw
 import tweepy
 import configparser
 
+from tweepy.error import TweepError
+
 
 CONFIG_FILE = "config.ini"
 
@@ -31,9 +33,9 @@ class Scraper:
                 social_source, f, item_count=3) for f in friends]
             comm = self.get_user_comments(
                 social_source, name)
-            return (comm, " ".join(texts))
+            return [(5, comm), (1, " ".join(texts))]
         elif(social_source == Social.REDDIT):
-            return (self.get_user_comments(social_source, name, item_count), " ")
+            return [(1, self.get_user_comments(social_source, name, item_count))]
 
     def get_user_comments(self, social_source: Social, name: str, item_count=10):
         if(social_source == Social.TWITTER):
@@ -46,13 +48,26 @@ class Scraper:
                 "all", limit=item_count)]
         return " ".join(comments)
 
-    def get_twitter_friends(self, name: str, limit=10):
-        friends = self.twitter.friends_ids(screen_name=name)[:limit]
-        friend_names = [self.twitter.get_user(
-            id).screen_name for id in friends]
-        return friend_names
+    def get_twitter_friends(self, name: str, limit=5):
+        try:
+            friends = self.twitter.friends_ids(screen_name=name)[:limit]
+            friend_names = [self.twitter.get_user(
+                id).screen_name for id in friends]
+            return friend_names
+        except TweepError as e:
+            print(e)
+            return []
 
-    def get_redditors(self, limit=10):
-        names = [post.author.name for post in self.reddit.subreddit(
-            "news").comments(limit=limit)]
+    def get_twitter_followers(self, name: str, limit=10):
+        followers = self.twitter.followers_ids(screen_name=name)[:limit]
+        followers_names = [self.twitter.get_user(
+            id).screen_name for id in followers]
+        return followers_names
+
+    def sample_names(self, social_source: Social, limit=10):
+        if(social_source == Social.TWITTER):
+            names = self.get_twitter_followers("elonmusk")
+        elif(social_source == Social.REDDIT):
+            names = [post.author.name for post in self.reddit.subreddit(
+                "news").comments(limit=limit)]
         return names
