@@ -70,6 +70,7 @@ $(function() {
                     let linkPost = document.createElement("a")
                     let cl25 = document.createAttribute("href");
                     cl25.value = post.link;
+                    linkPost.setAttributeNode(cl25);
                     linkPost.textContent = post.ID;
 
                     header.append(linkPost);
@@ -110,6 +111,7 @@ $(function() {
                     let linkPost = document.createElement("a")
                     let cl25 = document.createAttribute("href");
                     cl25.value = post.link;
+                    linkPost.setAttributeNode(cl25);
                     linkPost.textContent = post.ID;
 
                     header.append(linkPost);
