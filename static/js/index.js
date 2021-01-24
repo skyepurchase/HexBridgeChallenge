@@ -54,20 +54,14 @@ $(function() {
                 $('#far_id_card').show();
 
                 data.close_ids.forEach(ID => {
-                    let p = document.createElement("div");
-                    let attr = document.createAttribute("class");
-                    attr.value = "new";
+                    let p = document.createElement("p");
                     p.textContent = ID;
-                    p.setAttributeNode(attr);
                     $('#close_ids').append(p);
                 })
 
                 data.far_ids.forEach(ID => {
-                    let p = document.createElement("div");
-                    let attr = document.createAttribute("class");
-                    attr.value = "new";
+                    let p = document.createElement("p");
                     p.textContent = ID;
-                    p.setAttributeNode(attr);
                     $('#far_ids').append(p);
                 })
             })
