@@ -56,13 +56,13 @@ $(function() {
 
                 data.close_ids.forEach(ID => {
                     let p = document.createElement("p");
-                    p.textContent = ID;
+                    p.textContent = JSON.stringify(ID);
                     $('#close_ids').append(p);
                 })
 
                 data.far_ids.forEach(ID => {
                     let p = document.createElement("p");
-                    p.textContent = ID;
+                    p.textContent = JSON.stringify(ID);
                     $('#far_ids').append(p);
                 })
             }).fail(function (err) {
