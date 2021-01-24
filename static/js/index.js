@@ -10,13 +10,13 @@ $(function() {
             let senddata;
             switch (social) {
                 case "twitter":
-                    senddata = {'consent': consent, 'twitter': ID};
+                    senddata = {'consent': consent, 'IDs':{'twitter': ID}};
                     break;
                 case "reddit":
-                    senddata = {'consent': consent, 'reddit': ID};
+                    senddata = {'consent': consent, 'IDs':{'reddit': ID}};
                     break;
                 default:
-                    senddata = {'consent': consent};
+                    senddata = {'consent': consent, 'IDs':{}};
             }
 
             $.ajax({

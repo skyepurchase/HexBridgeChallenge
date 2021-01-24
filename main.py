@@ -16,7 +16,7 @@ def root():
 @app.route("/process",methods=["POST"])
 def process():
     IDs =  request.form['IDs']
-    add_to_model=request.form['add_to_model']
+    add_to_model=request.form['consent']
     posts=[]
     for social, id in IDs.items():
         scraper = Scraper()
