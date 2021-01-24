@@ -27,20 +27,15 @@ class Scraper:
         self.twitter = tweepy.API(tweepy_auth)
 
     def get_user_text(self, social_source: Social, name: str, item_count=10):
-        try:
-            if(social_source == Social.TWITTER):
-                # friends = self.get_twitter_friends(name)
-                friends = []
-                texts = [self.get_user_comments(
-                    social_source, f, item_count=3) for f in friends]
-                comm = self.get_user_comments(
-                    social_source, name)
-                return (comm, " ".join(texts))
-            elif(social_source == Social.REDDIT):
-                return (self.get_user_comments(social_source, name, item_count), " ")
-        except Exception as e:
-            print(e)
-            return ""
+        if(social_source == Social.TWITTER):
+            friends = self.get_twitter_friends(name)
+            texts = [self.get_user_comments(
+                social_source, f, item_count=3) for f in friends]
+            comm = self.get_user_comments(
+                social_source, name)
+            return [(5, comm), (1, " ".join(texts))]
+        elif(social_source == Social.REDDIT):
+            return [(1, self.get_user_comments(social_source, name, item_count))]
 
     def get_user_comments(self, social_source: Social, name: str, item_count=10):
         if(social_source == Social.TWITTER):
@@ -53,7 +48,7 @@ class Scraper:
                 "all", limit=item_count)]
         return " ".join(comments)
 
-    def get_twitter_friends(self, name: str, limit=10):
+    def get_twitter_friends(self, name: str, limit=5):
         try:
             friends = self.twitter.friends_ids(screen_name=name)[:limit]
             friend_names = [self.twitter.get_user(
