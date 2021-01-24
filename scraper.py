@@ -4,7 +4,6 @@ import prawcore
 from prawcore.exceptions import PrawcoreException
 import tweepy
 import configparser
-import random
 
 from tweepy.error import TweepError
 
