@@ -125,7 +125,7 @@ $(function() {
                 })
 
             }).fail(function (err) {
-                alert(err);
+                alert("An error occurred checked console log!");
             })
         }
     })
