@@ -1,3 +1,7 @@
 .idea/
 .vscode/settings.json
 __pycache__/main.cpython-37.pyc
+__pycache__/astra.cpython-37.pyc
+__pycache__/model.cpython-37.pyc
+__pycache__/scraper.cpython-37.pyc
+__pycache__/vocabulary.cpython-37.pyc
