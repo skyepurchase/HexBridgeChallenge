@@ -86,15 +86,9 @@ $(function() {
                     quote.append(link)
                     body.append(quote)
 
-                    if (social === "twitter-tweet") {
-                        let p = document.createElement("p");
-                        p.textContent = post.link;
-                        body.append(p);
-                    } else {
-                        let p = document.createElement("p");
-                        p.textContent = post.link;
-                        body.append(p);
-                    }
+                    let p = document.createElement("p");
+                    p.textContent = post.link;
+                    body.append(p);
 
                     card.append(header);
                     card.append(body);
@@ -131,15 +125,9 @@ $(function() {
                     quote.append(link)
                     body.append(quote)
 
-                    if (social === "twitter-tweet") {
-                        let p = document.createElement("p");
-                        p.textContent = post.link;
-                        body.append(p);
-                    } else {
-                        let p = document.createElement("p");
-                        p.textContent = post.link;
-                        body.append(p);
-                    }
+                    let p = document.createElement("p");
+                    p.textContent = post.link;
+                    body.append(p);
 
                     card.append(header);
                     card.append(body);
