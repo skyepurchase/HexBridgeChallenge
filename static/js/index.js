@@ -24,7 +24,9 @@ $(function() {
         }
     })
 
-    $('form').on("submit", function(e) {
+    $('form').submit(function(e) {
+        e.preventDefault();
+
         const ID = $('#inputID').val();
         let ID2;
         if(both) {
@@ -55,7 +57,7 @@ $(function() {
                 $('#far_ids').empty();
 
                 data.close_ids.forEach(ID => {
-                    let p = document.createElement("p");
+                    let p = document.createElement("script");
                     p.textContent = JSON.stringify(ID);
                     $('#close_ids').append(p);
                 })
@@ -69,6 +71,5 @@ $(function() {
                 alert(err.message);
             })
         }
-        e.preventDefault();
     })
 })
