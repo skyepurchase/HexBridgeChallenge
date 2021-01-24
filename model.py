@@ -99,7 +99,7 @@ class Model:
         # Find users in the cluster furthest away
         furthest_cluster_users = [self.uids[i] for i in range(len(self.uids)) if self.kmeans.labels_[i] == furthest_cluster]
 
-        return [same_cluster_users], [furthest_cluster_users]
+        return same_cluster_users, furthest_cluster_users
 
 
 if __name__ == "__main__":
