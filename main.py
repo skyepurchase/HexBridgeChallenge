@@ -18,7 +18,7 @@ def root():
 def process():
     try:
         social=request.form['social']
-        consent=request.form['consent']
+        consent=bool(request.form['consent'])
         id=request.form['ID']
         scraper = Scraper()
         posts=scraper.get_user_text(Social.REDDIT,id) if (social=="reddit") else scraper.get_user_text(Social.TWITTER,id)
