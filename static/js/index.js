@@ -124,8 +124,9 @@ $(function() {
                     $('#far_ids').append(card);
                 })
 
-            }).fail(function (err) {
-                alert("An error occurred checked console log!");
+            }).fail(function (data, textStatus, xhr) {
+                alert("ERROR: " + data.status);
+                alert("STATUS: "+xhr);
             })
         }
     })
