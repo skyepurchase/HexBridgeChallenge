@@ -24,7 +24,9 @@ $(function() {
         }
     })
 
-    $('form').on("submit", function(e) {
+    $('form').submit(function(e) {
+        e.preventDefault();
+
         const ID = $('#inputID').val();
         let ID2;
         if(both) {
@@ -69,6 +71,5 @@ $(function() {
                 alert(err.message);
             })
         }
-        e.preventDefault();
     })
 })
