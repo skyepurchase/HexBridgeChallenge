@@ -3,6 +3,8 @@ import praw
 import tweepy
 import configparser
 
+from tweepy.error import TweepError
+
 
 CONFIG_FILE = "config.ini"
 
@@ -25,15 +27,20 @@ class Scraper:
         self.twitter = tweepy.API(tweepy_auth)
 
     def get_user_text(self, social_source: Social, name: str, item_count=10):
-        if(social_source == Social.TWITTER):
-            friends = self.get_twitter_friends(name)
-            texts = [self.get_user_comments(
-                social_source, f, item_count=3) for f in friends]
-            comm = self.get_user_comments(
-                social_source, name)
-            return (comm, " ".join(texts))
-        elif(social_source == Social.REDDIT):
-            return (self.get_user_comments(social_source, name, item_count), " ")
+        try:
+            if(social_source == Social.TWITTER):
+                # friends = self.get_twitter_friends(name)
+                friends = []
+                texts = [self.get_user_comments(
+                    social_source, f, item_count=3) for f in friends]
+                comm = self.get_user_comments(
+                    social_source, name)
+                return (comm, " ".join(texts))
+            elif(social_source == Social.REDDIT):
+                return (self.get_user_comments(social_source, name, item_count), " ")
+        except Exception as e:
+            print(e)
+            return ""
 
     def get_user_comments(self, social_source: Social, name: str, item_count=10):
         if(social_source == Social.TWITTER):
@@ -47,12 +54,25 @@ class Scraper:
         return " ".join(comments)
 
     def get_twitter_friends(self, name: str, limit=10):
-        friends = self.twitter.friends_ids(screen_name=name)[:limit]
-        friend_names = [self.twitter.get_user(
-            id).screen_name for id in friends]
-        return friend_names
+        try:
+            friends = self.twitter.friends_ids(screen_name=name)[:limit]
+            friend_names = [self.twitter.get_user(
+                id).screen_name for id in friends]
+            return friend_names
+        except TweepError as e:
+            print(e)
+            return []
 
-    def get_redditors(self, limit=10):
-        names = [post.author.name for post in self.reddit.subreddit(
-            "news").comments(limit=limit)]
+    def get_twitter_followers(self, name: str, limit=10):
+        followers = self.twitter.followers_ids(screen_name=name)[:limit]
+        followers_names = [self.twitter.get_user(
+            id).screen_name for id in followers]
+        return followers_names
+
+    def sample_names(self, social_source: Social, limit=10):
+        if(social_source == Social.TWITTER):
+            names = self.get_twitter_followers("elonmusk")
+        elif(social_source == Social.REDDIT):
+            names = [post.author.name for post in self.reddit.subreddit(
+                "news").comments(limit=limit)]
         return names
