@@ -17,8 +17,9 @@ def root():
 @app.route("/process",methods=["POST"])
 def process():
     try:
+        print("Hello")
         social=request.form['social']
-        consent=bool(request.form['consent'])
+        consent=request.form['consent']=='true'
         id=request.form['ID']
         scraper = Scraper()
         posts=scraper.get_user_text(Social.REDDIT,id) if (social=="reddit") else scraper.get_user_text(Social.TWITTER,id)
