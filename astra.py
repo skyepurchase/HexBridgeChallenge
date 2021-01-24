@@ -29,23 +29,20 @@ def test_connection():
 
 def save_user(id, data):
     data_string = base64.b64encode(pickle.dumps(data)).decode("ascii")
-    run_command(f"INSERT INTO \"HexBridge\".tbl (twitter, reddit, pickle) VALUES('{id['twitter']}', '{id['reddit']}', textAsBlob('{data_string}'))")
-
-
-def load_user(id):
-    rows = run_command(f"select pickle from \"HexBridge\".tbl where twitter = '{id['twitter']}' and reddit = '{id['reddit']}';")
-    data = pickle.loads(base64.b64decode(rows[0][0]))
-    return data
+    if 'reddit' in id:
+        run_command(f"INSERT INTO \"HexBridge\".wordcount (social, username, pickle) VALUES(0, '{id['reddit']}', textAsBlob('{data_string}'))")
+    if 'twitter' in id:
+        run_command(f"INSERT INTO \"HexBridge\".wordcount (social, username, pickle) VALUES(1, '{id['twitter']}', textAsBlob('{data_string}'))")
 
 
 def load_all_users():
-    rows = run_command("select * from \"HexBridge\".tbl;")
-    return [({'twitter': row[0], 'reddit': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
+    rows = run_command("select * from \"HexBridge\".wordcount;")
+    return [({'reddit' if row[0] == 0 else 'twitter': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
 
 
 if __name__ == "__main__":
     test_connection()
-    # save_user({'twitter': 'asdf', 'reddit': 'qwer'}, [1, 2, 3, 4])
-    # save_user({'twitter': 'test', 'reddit': 'test'}, [9, 8, 7, 6])
-    print(load_user({'twitter': 'test', 'reddit': 'test'}))
+    # save_user({'twitter': 'test', 'reddit': 'test1'}, [9, 8, 7, 6])
+    # save_user({'twitter': 'test'}, [1, 2, 3, 4])
+    # save_user({'reddit': 'test'}, [2, 0, 2, 1])
     print(load_all_users())
