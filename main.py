@@ -1,12 +1,24 @@
 from flask import Flask, request, render_template, jsonify
 import json
 import traceback
+import time
+import atexit
+from apscheduler.schedulers.background import BackgroundScheduler
 from model import Model
 from scraper import Social, Scraper
 #from plot.py import plot_network
 
 app = Flask(__name__)
+model=Model()
 
+def update_model():
+    global model
+    model=Model()
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=update_model, trigger="interval", minutes=1)
+scheduler.start()
 
 
 @app.route('/',methods=["GET"])
@@ -23,12 +35,12 @@ def process():
         id=request.form['ID']
         scraper = Scraper()
         posts=scraper.get_user_text(Social.REDDIT,id) if (social=="reddit") else scraper.get_user_text(Social.TWITTER,id)
-        model=Model()
         IDs={}
         IDs[social]=id
         close_ids,far_ids=model.process_user(IDs,posts,consent)
+
+
         res={"close_ids":close_ids,"far_ids":far_ids}
-        print("Returning: " + str(res))
         return res
     except Exception as e:
         traceback.print_tb(e.__traceback__)
