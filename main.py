@@ -34,7 +34,6 @@ def root():
 def add_url(people):
     res=[]
     for p in people:
-        print('People')
         for (social,id) in p.items():
             social_enum=Social.TWITTER if social=="twitter" else Social.REDDIT
             social_formatted="twitter-tweet" if social=="twitter" else "reddit-card"
@@ -46,11 +45,9 @@ def add_url(people):
 @app.route("/process",methods=["POST"])
 def process():
     try:
-        print("Hello")
         social=request.form['social']
         consent=request.form['consent']=='true'
         id=request.form['ID']
-        print(id)
         posts=scraper.get_user_text(Social.REDDIT,id) if (social=="reddit") else scraper.get_user_text(Social.TWITTER,id)
         IDs={}
         IDs[social]=id
@@ -58,7 +55,6 @@ def process():
         close_id_num=min(len(close_ids),RESULTS_TO_SHOW)
         far_id_num=min(len(far_ids),RESULTS_TO_SHOW)
         res={"close_ids":add_url(random.sample(close_ids,close_id_num)),"far_ids":add_url(random.sample(far_ids,far_id_num))}
-        print(res)
         return res
     except Exception as e:
         traceback.print_tb(e.__traceback__)
