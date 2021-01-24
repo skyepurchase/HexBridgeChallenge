@@ -21,12 +21,13 @@
     <div class="container">
         <form class="form-twitter-id" role="form">
             <h2 class="form-twitter-id-heading">Please Enter Twitter Handle</h2>
-            <div class="row">
+            <div class="row" id="idForm">
                 <select class="col" id="social" name="dropdown">
+                    <option value="both" name="both" selected>Both</option>
                     <option value="twitter" selected>Twitter Account</option>
                     <option value="reddit" selected>Reddit Account</option>
                 </select>
-                <input type="text" id="inputID" name="ID" class="col form-control" placeholder="@Your-Handle" required/>
+                <input type="text" id="inputID" name="ID" class="col form-control" placeholder="Your ID" required/>
             </div>
             <label for="consent" class="col">Do you wish to be added to the Database?</label>
             <input class="col" type="radio" id="consent" name="consent" value="yes"/> Yes<br><br>
