@@ -27,4 +27,5 @@ def process():
         res={"close_ids":close_ids,"far_ids":far_ids}
         return json.dumps(res)
     except Exception as e:
+        print(e)
         return json.dumps({"close_ids":[],"far_ids":[]})
