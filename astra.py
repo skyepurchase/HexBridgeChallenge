@@ -37,7 +37,7 @@ def save_user(id, data):
 
 def load_all_users():
     rows = run_command("select * from \"HexBridge\".wordcount;")
-    return [(row[0], row[1], pickle.loads(base64.b64decode(row[2]))) for row in rows]
+    return [({'reddit' if row[0] == 0 else 'twitter': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
 
 
 if __name__ == "__main__":
