@@ -37,9 +37,10 @@ def add_url(people):
         print('People')
         for (social,id) in p.items():
             social_enum=Social.TWITTER if social=="twitter" else Social.REDDIT
+            social_formatted="twitter-tweet" if social=="twitter" else "reddit-card"
             tweet_urls=scraper.get_user_comment_urls(social_enum,id,item_count=RANDOM_PAST_LENGTH)
             url=tweet_urls[0]#random.choice(tweets)
-            res.append({"id":id,"social":social,"url":url})
+            res.append({"id":id,"social":social_formatted,"url":url})
     return res
 
 @app.route("/process",methods=["POST"])
