@@ -61,7 +61,9 @@ $(function() {
                     p.textContent = ID;
                     $('#far_ids').append(p);
                 })
-            })
+            }).fail() {
+
+            };
         }
         e.preventDefault();
     })
