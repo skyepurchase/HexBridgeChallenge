@@ -70,25 +70,20 @@ $(function() {
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
-                    cl3.value = "card-body";
+                    cl3.value = "card-body d-flex justify-content-center";
                     body.setAttributeNode(cl3);
 
                     let quote = document.createElement("blockquote");
+                    let cl4 = document.createAttribute("class");
+                    cl4.value = post.social;
+                    quote.setAttributeNode(cl4);
 
-                    if (post.social === 'reddit') {
-                        let cl4 = document.createAttribute("class");
-                        cl4.value = "reddit-card";
-                        quote.setAttributeNode(cl4);
+                    let link = document.createElement("a");
+                    let href = document.createAttribute("href");
+                    href.value = post.link;
+                    link.setAttributeNode(href);
 
-                        let link = document.createElement("a");
-                        let href = document.createAttribute("href");
-                        href.value = post.link;
-                        link.setAttributeNode(href);
-
-                        quote.append(link)
-                    } else {
-                        quote.textContent = "Not a Reddit link"
-                    }
+                    quote.append(link)
 
                     body.append(quote)
                     card.append(header);
@@ -110,25 +105,20 @@ $(function() {
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
-                    cl3.value = "card-body";
+                    cl3.value = "card-body d-flex justify-content-center";
                     body.setAttributeNode(cl3);
 
                     let quote = document.createElement("blockquote");
+                    let cl4 = document.createAttribute("class");
+                    cl4.value = post.social;
+                    quote.setAttributeNode(cl4);
 
-                    if (post.social === 'reddit') {
-                        let cl4 = document.createAttribute("class");
-                        cl4.value = "reddit-card";
-                        quote.setAttributeNode(cl4);
+                    let link = document.createElement("a");
+                    let href = document.createAttribute("href");
+                    href.value = post.link;
+                    link.setAttributeNode(href);
 
-                        let link = document.createElement("a");
-                        let href = document.createAttribute("href");
-                        href.value = post.link;
-                        link.setAttributeNode(href);
-
-                        quote.append(link)
-                    } else {
-                        quote.textContent = "Not a Reddit link"
-                    }
+                    quote.append(link)
 
                     body.append(quote)
                     card.append(header);
