@@ -47,6 +47,8 @@ $(function() {
             }).done(function (data) {
                 $('#close_id_card').show();
                 $('#far_id_card').show();
+                $('#close_ids').empty();
+                $('#far_ids').empty();
 
                 data.close_ids.forEach(ID => {
                     let p = document.createElement("p");

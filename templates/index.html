@@ -21,15 +21,23 @@
     <div class="container">
         <form class="form-twitter-id" role="form">
             <h2 class="form-twitter-id-heading">Please Enter Twitter Handle</h2>
-            <div class="row" id="idForm">
-                <select class="col" id="social" name="dropdown">
-                    <option value="twitter" selected>Twitter Account</option>
-                    <option value="reddit" selected>Reddit Account</option>
-                </select>
-                <input type="text" id="inputID" name="ID" class="col form-control" required/>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="social" class="form-label">Select Account Type</label>
+                    <select class="col form-control" id="social" name="dropdown">
+                        <option value="twitter" selected>Twitter Account</option>
+                        <option value="reddit" selected>Reddit Account</option>
+                    </select>
+                </div>
+                <div class="col mb-3" id="idForm">
+                    <label for="inputID" class="form-label">Enter Your ID</label>
+                    <input type="text" id="inputID" name="ID" class="form-control" required/>
+                </div>
             </div>
-            <label for="consent" class="col">Do you wish to be added to the Database?</label>
-            <input class="col" type="radio" id="consent" name="consent" value="yes"/> Yes<br><br>
+            <div class="row">
+                <label class="col" for="consent">Do you wish to be added to the Database?</label> Yes<br><br>
+                <input class="col" type="checkbox" id="consent" name="consent" value="yes"/>
+            </div>
             <button class="col btn btn-lg btn-primary btn-block" type="submit">Generate</button>
         </form>
 
@@ -38,7 +46,7 @@
             <div class="card-body" id="close_ids">
             </div>
         </div>
-        <div class="card text-white bg-danger mb-5" id="far_id_card" style="max-width: 18rem;">
+        <div class="card text-white bg-danger mb-3" id="far_id_card" style="max-width: 18rem;">
             <div class="card-header">Far IDs</div>
             <div class="card-body" id="far_ids">
             </div>
