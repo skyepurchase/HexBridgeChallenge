@@ -39,7 +39,7 @@ def save_user(id, data):
 def load_all_users():
     rows = run_command("select * from \"HexBridge\".wordcount;")
     if not rows:
-        print("An error has occured. No rows fetched.")
+        print("An error has occurred. No rows fetched.")
         return []
     ret = [({'reddit' if row[0] == 0 else 'twitter': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
     print(f"{len(ret)} rows fetched from database.")
