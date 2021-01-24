@@ -28,5 +28,5 @@ def process():
         res={"close_ids":close_ids,"far_ids":far_ids}
         return json.dumps(res)
     except Exception as e:
-        traceback.print_tb(e.__traceback__)
+        traceback.print_tb(e.__traceback__, e)
         return json.dumps({"close_ids":[],"far_ids":[]})
