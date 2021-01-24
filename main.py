@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import json
 import traceback
 from model import Model
@@ -32,7 +32,7 @@ def process():
     except Exception as e:
         traceback.print_tb(e.__traceback__)
         print(e)
-        return {"close_ids":[],"far_ids":[]}
+        return jsonify(message=str(e)), 500
 
 """
 @app.route("/get_network",methods=["POST"])
