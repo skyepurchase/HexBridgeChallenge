@@ -2,6 +2,7 @@ import enum
 import praw
 import tweepy
 import configparser
+import random
 
 from tweepy.error import TweepError
 
@@ -71,3 +72,14 @@ class Scraper:
             names = [post.author.name for post in self.reddit.subreddit(
                 "news").comments(limit=limit)]
         return names
+
+    def get_random_comment(self, social_source: Social, name:str):
+        if(social_source==Social.TWITTER):
+            tweets = self.twitter.user_timeline(screen_name=name, count=10, include_rts = True, tweet_mode = 'extended')
+            if(len(tweets)==0):
+                raise Exception("User has no tweets")
+            else:
+                chosen=random.choice(tweets)
+                url="https://twitter.com/twitter/statuses/"+str(chosen.id)
+                print(url)
+                return url
