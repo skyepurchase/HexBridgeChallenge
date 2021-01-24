@@ -6,6 +6,12 @@ from scraper import Social, Scraper
 app = Flask(__name__)
 
 
+
+@app.route('/')
+def root():
+    return app.send_static_file('templates/index.html')
+
+
 @app.route("/process",methods=["POST"])
 def process():
     IDs =  request.form['IDs']
