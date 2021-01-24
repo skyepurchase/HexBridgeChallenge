@@ -56,17 +56,86 @@ $(function() {
                 $('#close_ids').empty();
                 $('#far_ids').empty();
 
-                data.close_ids.forEach(ID => {
-                    let p = document.createElement("script");
-                    p.textContent = JSON.stringify(ID);
-                    $('#close_ids').append(p);
+                data.close_ids.forEach(post => {
+                    let card = document.createElement("div");
+                    let cl1 = document.createAttribute("class");
+                    cl1.value = "card bg-success";
+                    card.setAttributeNode(cl1);
+
+                    let header = document.createElement("div");
+                    let cl2 = document.createAttribute("class");
+                    cl2.value = "card-header";
+                    header.setAttributeNode(cl2);
+                    header.textContent = post.ID;
+
+                    let body = document.createElement("div");
+                    let cl3 = document.createAttribute("class");
+                    cl3.value = "card-body";
+                    body.setAttributeNode(cl3);
+
+                    let quote = document.createElement("blockquote");
+
+                    if (post.social === 'reddit') {
+                        let cl4 = document.createAttribute("class");
+                        cl4.value = "reddit-card";
+                        quote.setAttributeNode(cl4);
+
+                        let link = document.createElement("a");
+                        let href = document.createAttribute("href");
+                        href.value = post.link;
+                        link.setAttributeNode(href);
+
+                        quote.append(link)
+                    } else {
+                        quote.textContent = "Not a Reddit link"
+                    }
+
+                    body.append(quote)
+                    card.append(header);
+                    card.append(body);
+                    $('#close_ids').append(card);
                 })
 
-                data.far_ids.forEach(ID => {
-                    let p = document.createElement("p");
-                    p.textContent = JSON.stringify(ID);
-                    $('#far_ids').append(p);
+                data.close_ids.forEach(post => {
+                    let card = document.createElement("div");
+                    let cl1 = document.createAttribute("class");
+                    cl1.value = "card bg-danger";
+                    card.setAttributeNode(cl1);
+
+                    let header = document.createElement("div");
+                    let cl2 = document.createAttribute("class");
+                    cl2.value = "card-header";
+                    header.setAttributeNode(cl2);
+                    header.textContent = post.ID;
+
+                    let body = document.createElement("div");
+                    let cl3 = document.createAttribute("class");
+                    cl3.value = "card-body";
+                    body.setAttributeNode(cl3);
+
+                    let quote = document.createElement("blockquote");
+
+                    if (post.social === 'reddit') {
+                        let cl4 = document.createAttribute("class");
+                        cl4.value = "reddit-card";
+                        quote.setAttributeNode(cl4);
+
+                        let link = document.createElement("a");
+                        let href = document.createAttribute("href");
+                        href.value = post.link;
+                        link.setAttributeNode(href);
+
+                        quote.append(link)
+                    } else {
+                        quote.textContent = "Not a Reddit link"
+                    }
+
+                    body.append(quote)
+                    card.append(header);
+                    card.append(body);
+                    $('#far_ids').append(card);
                 })
+
             }).fail(function (err) {
                 alert(err.message);
             })
