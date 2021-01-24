@@ -1,6 +1,6 @@
 $(function() {
-    //$('#close_id_card').hide();
-    //$('#far_id_card').hide();
+    $('#close_id_card').hide();
+    $('#far_id_card').hide();
 
     let both = false;
     let select = document.getElementById('social');
