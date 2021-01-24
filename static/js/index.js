@@ -85,6 +85,13 @@ $(function() {
 
                     quote.append(link)
                     body.append(quote)
+
+                    if (social === "twitter-tweet") {
+                        body.append("<p>Twitter</p>")
+                    } else {
+                        body.append("<p>Reddit</p>")
+                    }
+
                     card.append(header);
                     card.append(body);
                     $('#close_ids').append(card);
@@ -119,6 +126,13 @@ $(function() {
 
                     quote.append(link)
                     body.append(quote)
+
+                    if (social === "twitter-tweet") {
+                        body.append("<p>Twitter</p>")
+                    } else {
+                        body.append("<p>Reddit</p>")
+                    }
+
                     card.append(header);
                     card.append(body);
                     $('#far_ids').append(card);
