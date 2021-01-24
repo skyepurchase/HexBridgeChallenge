@@ -66,7 +66,13 @@ $(function() {
                     let cl2 = document.createAttribute("class");
                     cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
-                    header.textContent = post.ID + post.link;
+
+                    let linkPost = document.createElement("a")
+                    let cl25 = document.createAttribute("href");
+                    cl25.value = post.link;
+                    linkPost.textContent = post.ID;
+
+                    header.append(linkPost);
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
@@ -100,7 +106,13 @@ $(function() {
                     let cl2 = document.createAttribute("class");
                     cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
-                    header.textContent = post.ID + post.link;
+
+                    let linkPost = document.createElement("a")
+                    let cl25 = document.createAttribute("href");
+                    cl25.value = post.link;
+                    linkPost.textContent = post.ID;
+
+                    header.append(linkPost);
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
