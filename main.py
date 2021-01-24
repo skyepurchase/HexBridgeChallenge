@@ -3,6 +3,7 @@ import json
 import traceback
 from model import Model
 from scraper import Social, Scraper
+#from plot.py import plot_network
 
 app = Flask(__name__)
 
@@ -31,3 +32,16 @@ def process():
         traceback.print_tb(e.__traceback__)
         print(e)
         return json.dumps({"close_ids":[],"far_ids":[]})
+
+"""
+@app.route("/get_network",methods=["POST"])
+def get_network():
+    try:
+        points=get_points()
+        plot_network(points)
+        return send_file(network.png)
+    except Exception as e:
+        traceback.print_tb(e.__traceback__)
+        print(e)
+        return {}
+"""
