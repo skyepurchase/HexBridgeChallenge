@@ -1,17 +1,8 @@
 import pickle
 import base64
 
-from scipy.sparse.csr import csr_matrix
-
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
-
-
-storage = [
-        ({}, csr_matrix([1, 0, 0, 0, 0, 0, 0, 0])),
-        ({}, csr_matrix([0, 0, 1, 0, 0, 0, 0, 0]))
-]
-
 
 
 def run_command(cmd):
@@ -26,7 +17,7 @@ def run_command(cmd):
         rows = session.execute(cmd).all()
         return rows
     except:
-        print("An error has occurred")
+        print(f"An error has occurred for '{cmd}'")
         return None
 
 
@@ -36,24 +27,25 @@ def test_connection():
         print("Connection ok.")
 
 
-def save_user(twitter_id, data):
-    #data_string = base64.b64encode(pickle.dumps(data)).decode("ascii")
-    #run_command(f"INSERT INTO \"HexBridge\".wordcounts (id, pickle) VALUES('{twitter_id}', textAsBlob('{data_string}'))")
-    storage.append((twitter_id, data))
+def save_user(id, data):
+    data_string = base64.b64encode(pickle.dumps(data)).decode("ascii")
+    run_command(f"INSERT INTO \"HexBridge\".tbl (twitter, reddit, pickle) VALUES('{id['twitter']}', '{id['reddit']}', textAsBlob('{data_string}'))")
 
 
-def load_user(twitter_id):
-    #row = run_command(f"select pickle from \"HexBridge\".wordcounts where id = '{twitter_id}';")
-    #data = pickle.loads(base64.b64decode(row[0]))
-    #print(data)
-    #return data
-    pass
+def load_user(id):
+    rows = run_command(f"select pickle from \"HexBridge\".tbl where twitter = '{id['twitter']}' and reddit = '{id['reddit']}';")
+    data = pickle.loads(base64.b64decode(rows[0][0]))
+    return data
+
 
 def load_all_users():
-    return storage
+    rows = run_command("select * from \"HexBridge\".tbl;")
+    return [({'twitter': row[0], 'reddit': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
 
 
 if __name__ == "__main__":
     test_connection()
-    print(load_user('test'))
+    # save_user({'twitter': 'asdf', 'reddit': 'qwer'}, [1, 2, 3, 4])
+    # save_user({'twitter': 'test', 'reddit': 'test'}, [9, 8, 7, 6])
+    print(load_user({'twitter': 'test', 'reddit': 'test'}))
     print(load_all_users())
