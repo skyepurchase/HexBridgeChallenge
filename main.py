@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 
 
-@app.route('/')
+@app.route('/',methods=["GET"])
 def root():
     return app.send_static_file('templates/index.html')
 
