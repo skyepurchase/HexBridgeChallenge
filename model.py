@@ -12,7 +12,7 @@ from astra import save_user, load_all_users
 from vocabulary import vocabulary
 
 # Constants
-NUM_CLUSTERS = 4
+NUM_CLUSTERS = 25
 
 
 class Model:
