@@ -66,7 +66,7 @@ $(function() {
                     let cl2 = document.createAttribute("class");
                     cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
-                    header.textContent = post.ID;
+                    header.textContent = post.ID + post.link;
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
@@ -85,11 +85,6 @@ $(function() {
 
                     quote.append(link)
                     body.append(quote)
-
-                    let p = document.createElement("p");
-                    p.textContent = post.link;
-                    body.append(p);
-
                     card.append(header);
                     card.append(body);
                     $('#close_ids').append(card);
@@ -105,7 +100,7 @@ $(function() {
                     let cl2 = document.createAttribute("class");
                     cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
-                    header.textContent = post.ID;
+                    header.textContent = post.ID + post.link;
 
                     let body = document.createElement("div");
                     let cl3 = document.createAttribute("class");
@@ -124,11 +119,6 @@ $(function() {
 
                     quote.append(link)
                     body.append(quote)
-
-                    let p = document.createElement("p");
-                    p.textContent = post.link;
-                    body.append(p);
-
                     card.append(header);
                     card.append(body);
                     $('#far_ids').append(card);
