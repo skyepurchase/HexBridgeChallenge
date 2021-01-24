@@ -64,7 +64,7 @@ $(function() {
 
                     let header = document.createElement("div");
                     let cl2 = document.createAttribute("class");
-                    cl2.value = "card-header";
+                    cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
                     header.textContent = post.ID;
 
@@ -99,7 +99,7 @@ $(function() {
 
                     let header = document.createElement("div");
                     let cl2 = document.createAttribute("class");
-                    cl2.value = "card-header";
+                    cl2.value = "card-header d-flex justify-content-center";
                     header.setAttributeNode(cl2);
                     header.textContent = post.ID;
 
