@@ -1,6 +1,8 @@
 import pickle
 import base64
 
+from scipy.sparse.csr import csr_matrix
+
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
