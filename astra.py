@@ -17,7 +17,7 @@ def run_command(cmd):
         rows = session.execute(cmd).all()
         return rows
     except:
-        print("An error has occurred")
+        print(f"An error has occurred for '{cmd}'")
         return None
 
 
@@ -27,23 +27,22 @@ def test_connection():
         print("Connection ok.")
 
 
-def save_user(twitter_id, data):
+def save_user(id, data):
     data_string = base64.b64encode(pickle.dumps(data)).decode("ascii")
-    run_command(f"INSERT INTO \"HexBridge\".wordcounts (id, pickle) VALUES('{twitter_id}', textAsBlob('{data_string}'))")
-
-
-def load_user(twitter_id):
-    rows = run_command(f"select pickle from \"HexBridge\".wordcounts where id = '{twitter_id}';")
-    data = pickle.loads(base64.b64decode(rows[0][0]))
-    return data
+    if 'reddit' in id:
+        run_command(f"INSERT INTO \"HexBridge\".wordcount (social, username, pickle) VALUES(0, '{id['reddit']}', textAsBlob('{data_string}'))")
+    if 'twitter' in id:
+        run_command(f"INSERT INTO \"HexBridge\".wordcount (social, username, pickle) VALUES(1, '{id['twitter']}', textAsBlob('{data_string}'))")
 
 
 def load_all_users():
-    rows = run_command("select * from \"HexBridge\".wordcounts;")
-    return {row[0]: pickle.loads(base64.b64decode(row[1])) for row in rows}
+    rows = run_command("select * from \"HexBridge\".wordcount;")
+    return [({'reddit' if row[0] == 0 else 'twitter': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
 
 
 if __name__ == "__main__":
     test_connection()
-    print(load_user('test'))
+    # save_user({'twitter': 'test', 'reddit': 'test1'}, [9, 8, 7, 6])
+    # save_user({'twitter': 'test'}, [1, 2, 3, 4])
+    # save_user({'reddit': 'test'}, [2, 0, 2, 1])
     print(load_all_users())
