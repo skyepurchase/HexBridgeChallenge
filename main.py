@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import json
 from model import Model
 from scraper import Social, Scraper
@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 @app.route('/',methods=["GET"])
 def root():
-    return app.send_static_file('templates/index.html')
+    print("Call to root")
+    return render_template('index.html')
 
 
 @app.route("/process",methods=["POST"])
