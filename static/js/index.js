@@ -12,11 +12,11 @@ $(function() {
         } else if (e.target.value === 'twitter') {
             $("#inputID").attr("placeholder", "Your Twitter ID");
             let ID2el = document.getElementById('inputID2');
-            ID2el.parentNode.removeChild(ID2el); // Such a weird way of doing it but it works
+            ID2el.remove();
         } else {
             $("#inputID").attr("placeholder", "Your Reddit ID");
             let ID2el = document.getElementById('inputID2');
-            ID2el.parentNode.removeChild(ID2el);
+            ID2el.remove();
         }
     })
 
