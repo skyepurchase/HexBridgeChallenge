@@ -13,6 +13,7 @@ def run_command(cmd):
         auth_provider = PlainTextAuthProvider('hexbridge', 'password1')
         cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
         session = cluster.connect()
+        session.default_timeout = 60
 
         rows = session.execute(cmd).all()
         return rows
@@ -37,6 +38,8 @@ def save_user(id, data):
 
 def load_all_users():
     rows = run_command("select * from \"HexBridge\".wordcount;")
+    if not rows:
+        return None
     return [({'reddit' if row[0] == 0 else 'twitter': row[1]}, pickle.loads(base64.b64decode(row[2]))) for row in rows]
 
 
