@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 import json
+import traceback
 from model import Model
 from scraper import Social, Scraper
 
@@ -27,5 +28,5 @@ def process():
         res={"close_ids":close_ids,"far_ids":far_ids}
         return json.dumps(res)
     except Exception as e:
-        print(e)
+        traceback.print_tb(e.__traceback__)
         return json.dumps({"close_ids":[],"far_ids":[]})
