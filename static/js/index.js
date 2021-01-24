@@ -125,7 +125,7 @@ $(function() {
                 })
 
             }).fail(function (err) {
-                alert(err.message);
+                alert(err);
             })
         }
     })
