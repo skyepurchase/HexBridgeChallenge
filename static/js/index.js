@@ -6,18 +6,25 @@ $(function() {
     let select = document.getElementById('social');
     select.addEventListener('change', e => {
         if (e.target.value === 'both') {
-            $('#idForm').append('<input type="text" id="inputID2" name="ID" class="col form-control" placeholder="Your ID" required/>')
+            $("#inputID").attr("placeholder", "Your Reddit ID");
+            $('#idForm').append('<input type="text" id="inputID2" name="ID" class="col form-control" placeholder="Your Twitter ID" required/>')
             both = true;
-        } else {
+        } else if (e.target.value === 'twitter') {
+            $("#inputID").attr("placeholder", "Your Twitter ID");
             let ID2el = document.getElementById('inputID2');
-            ID2el.parentNode.removeChild(ID2el); // Such a weird wat of doing it but it works
+            ID2el.parentNode.removeChild(ID2el); // Such a weird way of doing it but it works
+        } else {
+            $("#inputID").attr("placeholder", "Your Reddit ID");
+            let ID2el = document.getElementById('inputID2');
+            ID2el.parentNode.removeChild(ID2el);
         }
     })
 
     $('form').on("submit", function(e) {
         const ID = $('#inputID').val();
+        let ID2;
         if(both) {
-            const ID2 = $('#inputID2').val();
+            ID2 = $('#inputID2').val();
         }
 
         if (ID) {
@@ -32,7 +39,8 @@ $(function() {
                     senddata = {'consent': consent, 'reddit': ID};
                     break;
                 case "both":
-                    senddata = {'consent': consent, 'reddit':ID, 'twitter':ID2}
+                    senddata = {'consent': consent, 'reddit':ID, 'twitter':ID2};
+                    break;
                 default:
                     senddata = {'consent': consent};
             }
