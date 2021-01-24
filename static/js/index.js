@@ -84,14 +84,13 @@ $(function() {
                     link.setAttributeNode(href);
 
                     quote.append(link)
-
                     body.append(quote)
                     card.append(header);
                     card.append(body);
                     $('#close_ids').append(card);
                 })
 
-                data.close_ids.forEach(post => {
+                data.far_ids.forEach(post => {
                     let card = document.createElement("div");
                     let cl1 = document.createAttribute("class");
                     cl1.value = "card bg-danger";
@@ -119,7 +118,6 @@ $(function() {
                     link.setAttributeNode(href);
 
                     quote.append(link)
-
                     body.append(quote)
                     card.append(header);
                     card.append(body);
